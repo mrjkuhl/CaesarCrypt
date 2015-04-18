@@ -3,23 +3,12 @@ function CipherObject(shift) {
 	// Need to handle spaces
 	this.encrypt = function(text) {
 
-		text = text.toLowerCase();
 		var i = 0;
-		var j = 0;
 		var cipherText = new Array();
 
 		while (i < text.length) {
 
-		  while (j < this.cipher.length) {
-
-		    if(text[i] == this.alphabet[j]) {
-
-		      cipherText[i] = this.cipher[j];
-		      j = 0;
-		      break;
-		    }
-		    j++;
-		  }
+		  cipherText[i] = String.fromCharCode(text.charCodeAt(i) - 32 + this.shift % 96 + 32);
 		  i++;
 		}
 
@@ -30,21 +19,11 @@ function CipherObject(shift) {
 	this.decrypt = function(cipherText) {
 
 		var i = 0;
-		var j = 0;
 		var text = new Array();
 
 		while (i < cipherText.length) {
 
-		  while (j < this.cipher.length) {
-
-		    if(cipherText[i] == this.cipher[j]) {
-
-		      text[i] = this.alphabet[j];
-		      j = 0;
-		      break;
-		    }
-		    j++;
-		  }
+		  text[i] = String.fromCharCode(cipherText.charCodeAt(i) - 32 - this.shift % 96 + 32);
 		  i++;
 		}
 
