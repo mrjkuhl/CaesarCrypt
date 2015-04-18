@@ -23,7 +23,7 @@ function CipherObject(shift) {
 		  i++;
 		}
 
-		return cipherText;
+		return cipherText.join("");
 	}
 
 	// Need to handle spaces
@@ -48,7 +48,7 @@ function CipherObject(shift) {
 		  i++;
 		}
 
-		return text
+		return text.join("");
 	}
 
 	this.setCipher = function() {
