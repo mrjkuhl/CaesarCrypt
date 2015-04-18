@@ -14,7 +14,6 @@ function CipherObject(shift) {
 
 		    if(text[i] == this.alphabet[j]) {
 
-			window.alert("Encrypting... " + text[i] + " => " + this.cipher[j]);
 		      cipherText[i] = this.cipher[j];
 		      j = 0;
 		      break;
@@ -40,7 +39,6 @@ function CipherObject(shift) {
 
 		    if(cipherText[i] == this.cipher[j]) {
 
-			window.alert("Decrypting... " + cipherText[i] + " => " + this.alphabet[j]);
 		      text[i] = this.alphabet[j];
 		      j = 0;
 		      break;
