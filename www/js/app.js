@@ -17,7 +17,7 @@ function onCreateNotesTableSuccess() {
 	var database = window.openDatabase(
 	  "caesarcipherDB",
 	  "1.0",
-	  "notes",
+	  "caesarcipherDB",
 	  1024 * 1024 * 10
 	);
 
@@ -27,36 +27,53 @@ function onCreateNotesTableSuccess() {
 	  onSQLSuccess
 	);
 }
+
 function onReadNotesListSuccess(transaction, results) {
 
 	//window.alert("Notes read: " + results.rows.length + ".");
-	/*var i = 1;
+	var i = 0;
 
-	while (i <= results.rows.length) {
+	while (i < results.rows.length) {
 
 	  document.getElementById("notesContainer").innerHTML += "<a href=\"#page2\" id=\"note" + i + "\">note " + i + "</a><br />";
 	  document.getElementById("note" + i).addEventListener(
 	    "click",
 	    function() {
-	      openNote(i);
+	      openNote(results.rows.item(i));
 	    },
 	    false
 	  );
 
-	  //window.alert(results.rows.item(i).noteID);
+	  window.alert(results.rows.item(i).noteID);
 	  i++;
-	}*/
+	}
 }
 
 function createNotesTable(database) {
 
-	//sql = "DROP TABLE IF EXISTS notes;";
+	/*sql = "DROP TABLE IF EXISTS notes;";
+
+	database.executeSql(sql, [], onSQLSuccess, onSQLError);*/
+
 	sql = "CREATE TABLE IF NOT EXISTS notes("
-	  + "noteID INT PRIMARY KEY,"
+	  + "noteID INTEGER PRIMARY KEY,"
 	  + "title TEXT NOT NULL,"
 	  + "body TEXT NOT NULL);";
 
 	database.executeSql(sql, [], onSQLSuccess, onSQLError);
+
+	/*sql = "INSERT INTO notes (noteID, title, body) VALUES (?, ?, ?);"
+
+	database.executeSql(
+	  sql,
+	  [
+	    1,
+	    "Welcome!",
+	    "Beginner note."
+	  ],
+	  onSQLSuccess,
+	  onSQLError
+	);*/
 }
 
 function readNotesList(database) {
@@ -68,23 +85,21 @@ function readNotesList(database) {
 
 function insertNote(database) {
 
-	sql = "INSERT INTO notes (noteID, title, body) VALUES(?, ?, ?);";
+	var titleText = document.getElementById("txtTitle").value;
+	var bodyText = document.getElementById("txtBody").value;
+
+	sql = "INSERT INTO notes (title, body) VALUES(?, ?);";
 
 	database.executeSql(
 	  sql,
 	  [
-	    1,
-	    document.getElementById("txtTitle").value,
-	    document.getElementById("txtBody").value
+	    titleText,
+	    bodyText
 	  ],
 	  onSQLSuccess,
 	  onSQLError
 	);
 }
-
-/*
-function saveNote() {
-} */
 
 function onDeviceReady() {
 
@@ -109,7 +124,7 @@ function onDeviceReady() {
 	var database = window.openDatabase(
 	  "caesarcipherDB",
 	  "1.0",
-	  "notes",
+	  "caesarcipherDB",
 	  1024 * 1024 * 10
 	);
 
@@ -124,17 +139,17 @@ function newNote() {
 	document.getElementById("txtTitle").value = "";
 	document.getElementById("txtBody").value = "";
 
-	document.getElementById("viewNote").style.display = "none";
-	document.getElementById("editNote").style.display = "inherit";
+	//document.getElementById("viewNote").style.display = "none";
+	//document.getElementById("editNote").style.display = "inherit";
 }
 
-function openNote(noteID) {
+function openNote(note) {
 
-	document.getElementById("txtTitle").value = "";
-	document.getElementById("txtBody").value = "";
+	document.getElementById("txtTitle").value = note.title;
+	document.getElementById("txtBody").value = note.body;
 
-	document.getElementById("editNote").style.display = "none";
-	document.getElementById("viewNote").style.display = "inherit";
+	//document.getElementById("editNote").style.display = "none";
+	//document.getElementById("viewNote").style.display = "inherit";
 }
 
 function finishNote() {
@@ -142,7 +157,7 @@ function finishNote() {
 	var database = window.openDatabase(
 	  "caesarcipherDB",
 	  "1.0",
-	  "notes",
+	  "caesarcipherDB",
 	  1024 * 1024 * 10
 	);
 
