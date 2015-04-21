@@ -30,22 +30,20 @@ function onCreateNotesTableSuccess() {
 
 function onReadNotesListSuccess(transaction, results) {
 
-	//window.alert("Notes read: " + results.rows.length + ".");
-	var i = 0;
+	for (var i = 0; i < results.rows.length; i++) {
 
-	while (i < results.rows.length) {
+	  new NoteObject(results.rows.item(i));
+	  /*(function(num) {
+	    document.getElementById("notesContainer").innerHTML += "<a href=\"#page2\" id=\"note" + num + "\">note " + num + "</a><br />";
+	    document.getElementById("note" + num).addEventListener(
+	      "click",
+	      function() {
+	        openNote(results.rows.item(num));
+	      },
+	      false
+	    );
 
-	  document.getElementById("notesContainer").innerHTML += "<a href=\"#page2\" id=\"note" + i + "\">note " + i + "</a><br />";
-	  document.getElementById("note" + i).addEventListener(
-	    "click",
-	    function() {
-	      openNote(results.rows.item(i));
-	    },
-	    false
-	  );
-
-	  window.alert(results.rows.item(i).noteID);
-	  i++;
+	  }(i));*/
 	}
 }
 
@@ -143,14 +141,14 @@ function newNote() {
 	//document.getElementById("editNote").style.display = "inherit";
 }
 
-function openNote(note) {
+/*function openNote(note) {
 
 	document.getElementById("txtTitle").value = note.title;
 	document.getElementById("txtBody").value = note.body;
 
 	//document.getElementById("editNote").style.display = "none";
 	//document.getElementById("viewNote").style.display = "inherit";
-}
+}*/
 
 function finishNote() {
 

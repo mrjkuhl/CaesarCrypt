@@ -1,53 +1,31 @@
-function NoteObject(noteID, cipher, database) {
+function NoteObject(noteData) {
 
-	this.getData = function(tx, field) {
+	this.openNote = function() {
 
-	  var sql = "SELECT title, body FROM notes WHERE noteID = " + this.noteID;
+	  document.getElementById("txtTitle").value = self.title;
+	  document.getElementById("txtBody").value = self.body;
 
-	  tx.executeSql(sql, [], onSQLSucces, onSQLError());
+	  //document.getElementById("editNote").style.display = "none";
+	  //document.getElementById("viewNote").style.display = "inherit";
 	}
 
-	this.onSQLError = function(errorObject) {
+	this.displayNote = function() {
 
-	  if(errorObject) {
-
-	    console.log("Transaction failed. Error code: " + errorObject.code);
-	  }
-
-	  else {
-
-	    console.log("Unknown error.");
-	  }
-	}
-
-	this.onSQLSuccess = function() {
-
-		console.log("Transaction successful.");
-	}
-
-	this.getTitle = function() {
-
-	  this.database.transaction(
-	    this.getData,
-	    this.onSQLError,
-	    this.onSQLSuccess
+	  document.getElementById("notesContainer").innerHTML += "<a href=\"#page2\" id=\"note" + self.noteID + "\">" + self.title + "</a><br />";
+	  document.getElementById("note" + self.noteID).addEventListener(
+	    "click",
+	    function() {
+	      self.openNote();
+	    },
+	    false
 	  );
 	}
 
-	this.getBody = function() {
-	}
+	var self = this;
 
-	this.decryptTitle = function() {
-	}
+	self.noteID = noteData.noteID;
+	self.title = noteData.title;
+	self.body = noteData.body;
 
-	this.decryptBody = function() {
-	}
-
-	this.noteID = noteID;
-	this.database = database;
-	this.title;
-	this.body;
-
-	this.decryptTitle();
-	this.decryptBody();
+	self.displayNote();
 }
