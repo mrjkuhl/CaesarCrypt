@@ -56,7 +56,7 @@ function createNotesTable(database) {
 	database.executeSql(sql, [], onSQLSuccess, onSQLError);*/
 
 	sql = "CREATE TABLE IF NOT EXISTS notes("
-	  + "noteID INTEGER PRIMARY KEY,"
+	  + "noteID INTEGER NOT NULL PRIMARY KEY,"
 	  + "title TEXT NOT NULL,"
 	  + "body TEXT NOT NULL);";
 
